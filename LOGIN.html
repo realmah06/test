@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN | HADIQATUS SIBYAN SCH OF SCI & QUR'AN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.20/sweetalert2.min.css">
+    <link rel="icon" href="logo.enc">
+</head>
+<style>
+      body{
+    margin: 0;
+  }
+  /* Login */
+  .login{
+    margin-top: 70px;
+    width: 70%;
+    margin-left: 15%;
+  }
+  .login > h2{
+    text-align: center;
+    margin-bottom: 10px;
+    color: rgb(37, 34, 8);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  .login > p{
+    text-align: center;
+    font-style: italic;
+    font-size: 22px;
+  }
+  .login form > label{
+    margin-left: 19%;
+    margin-top: 10px;
+    font-size: 21px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+  .login form > input{
+    margin-left: 19%;
+    width: 59.5%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .login form > #log-btn{
+    margin-left: 19%;
+    width: 61.5%;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #fff;
+    background-color: #373535;
+  }
+  .login form > #log-btn:hover{
+    background-color: #000;
+  }
+  #log-footer{
+    background: fixed;
+    background-color: #3f3d3d;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 12.8px;
+    text-align: center;
+    color: #8f8b8b;
+  }
+  /* Dashboard header */
+  
+</style>
+<body>
+    <div class="login">
+      <br><br><br><br><br><br><br><br><br><br><br>
+        <h2>HADIQATUS SIBYAN SCHOOL OF <br> SCIENCE & QUR'AN</h2>
+        <p>Login</p>
+        <hr style="border: 2px solid rgb(37, 34, 8);width: 65%;">
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <br>
+            <input type="text" name="username" id="username" placeholder="Username" required>
+            <br>
+            <label for="password">Password</label>
+            <br>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <br><br><br>
+            <button id="log-btn" onclick="login()" type="submit">Login</button>
+        </form><br>
+        <hr style="border: 2px solid rgb(37, 34, 8);width: 65%;">
+    </div>
+    <footer id="log-footer">
+        Copyright &copy; HADIQATUS SIBYAN SCH OF SCI & QUR'AN
+    </footer>
+</body>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form submission
+  
+  // Get username and password values
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+
+  // Example validation (replace with your own logic)
+  if (username === 'admin' && password === 'password') {
+    // If valid, show success message and redirect to homepage (example href)
+    Swal.fire({
+      icon: 'success',
+      title: 'Login Successful!',
+      text: 'Redirecting to admin dashboard...',
+      timer: 2000,
+      showConfirmButton: true
+    }).then(() => {
+      // Redirect to admin dashboard
+      window.location.href = "admin_dashboard.html";
+    });
+  } else {
+    // If invalid, show error message
+    Swal.fire({
+      icon: 'error',
+      title: 'Login Failed',
+      text: 'Invalid username or password'
+    });
+  }
+});
+
+</script>
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.20/sweetalert2.min.js"></script>
+</html>
