@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M A Mujaheed | Admin Dashboard</title>
+    <link rel="icon" href="logo.jfif">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Include your existing styles here */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .last-login {
+            background-color: rgb(5, 126, 5);
+            text-align: center;
+            top: 0;
+            position: fixed;
+            padding: 10px;
+            color: #fff;
+            width: 100%;
+        }
+        .header {
+            padding: 10px;
+            top: 38px;
+            width: 100%;
+            position: fixed;
+            text-align: center;
+            align-items: center;
+            border-bottom: 1px solid #cccbcb;
+            background-color: #fff;
+            z-index: 1000; /* Ensure header is above other content */
+        }
+        .header > img {
+            height: 50px;
+        }
+        /* Styles for dropdown and other header items here */
+        /* Styling for the dropdown menu */
+    .dropdown {
+            position: relative;
+            display: inline-block;
+            list-style: none;
+        }
+
+        /* Styling for the dropdown button */
+        .dropdown > a {
+            padding: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Styling for the dropdown content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            list-style: none;
+            padding: 0;
+            margin-top: 35px;
+        }
+
+        /* Styling for each dropdown item */
+        .dropdown-content li{
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content li:hover {
+            background-color: #00224d;
+            color: #fff;
+            text-align: center;
+            transition: 0.7s;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown > a {
+            color: #000;
+        }
+
+        /* Change color of dropdown button on hover */
+        .dropdown > a:hover {
+            background-color: #00224d;
+            color: #fff;
+        }
+        .header > li{
+            list-style: none;
+            display: inline-flex;
+            cursor: pointer;
+            margin-inline-start: 30px;
+            padding: 7px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .header > li:hover{
+            background-color: #00224d;
+            color: #fff;
+            transition: 0.7s;
+        }
+        .header li > a{
+            text-decoration: none;
+            color: #000;
+        }
+        .header li > a:hover{
+            color: #fff;
+            
+        }
+        /* Popup form styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .popup.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: -300px; /* Start off-screen */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 10px;
+            display: block;
+            border-radius: 8px;
+            transition: bottom 2.5s ease;
+            height: 60vh;
+        }
+
+        .popup.show .popup-content {
+            top: 30%;
+            transform: translate(-50%, -50%);
+        }
+        .popup-content form .form >label{
+            font-size: 18px;
+            display: block;
+        }
+        .popup-content form .form > input{
+            padding: 8px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .popup-content form .form > select{
+            padding: 8px;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+        }
+        .popup-content form .form select > option{
+            font-size: 15px;
+            padding: 15px;
+        }
+        .popup-content > h2{
+            font-size: 20px;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .home{
+            border: 1px solid #ccc;
+            margin: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .home > h1{
+            color: #00224d;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .show{
+            margin-top: 40px;
+            font-size: 30px;
+            margin-left: 10px;
+            display: none;
+        }
+        .hide{
+            font-size: 30px;
+            margin: 10px;
+            display: none;
+        }
+        .tab-content{
+            width: 100%;
+            display: inline-flex;
+            border-bottom: 1px solid #ccc;
+        }
+        .dashboard{
+            margin-top: 10px;
+            display: block;
+            padding: 30px;
+            width: 288px;
+            height: 5vh;
+            flex-wrap: nowrap;
+            text-align: center;
+            align-items: center;
+        }
+        .tab{
+            margin-top: 10px;
+            display: block;
+            padding: 30px;
+            width: 288px;
+            height: 5vh;
+            flex-wrap: nowrap;
+            text-align: center;
+            align-items: center;
+        }
+        .dashboard, .tab > .fa{
+            font-size: 30px;
+        }
+        .tab, .dashboard{
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .content-section {
+            display: none;
+        }
+        .tab:active, .dashboard:active{
+            border: 1px solid #ccc;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        .tab.active, .dashboard:active {
+            border: 1px solid #ccc;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .contents{
+            display: none;
+        }
+        .balances-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .balance-item {
+            width: 800px;
+            margin: 20px;
+            padding: 20px;
+            height: 40vh;
+            overflow: auto;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .balance-item > #search{
+            width: 90%;
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        #no-customers-message {
+    display: none; /* Hide initially */
+}
+        .balance-item > h2{
+            color: #043f8d;
+        }
+        .balance-item > p{
+            font-size: 20px;
+            color: red;
+        }
+        #customer-balances, #bank-balances{
+            font-size: 20px;
+            padding: 7px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+        }
+        #customer-form > label{
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #customer-form > input{
+            width: 90%;
+            margin: 15px;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 7px;
+            border: 1px solid #ccc;
+        }
+        #customer-form center > button{
+            width: 200px;
+            padding: 7px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #00224d;
+            color: #fff;
+        }
+        #bank-form > label{
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #bank-form > input{
+            width: 90%;
+            margin: 15px;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 7px;
+            border: 1px solid #ccc;
+        }
+        #bank-form center > button{
+            width: 200px;
+            padding: 7px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #00224d;
+            color: #fff;
+        }
+
+
+        .content-section > label{
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .content-section > input{
+            width: 90%;
+            margin: 15px;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 7px;
+            border: 1px solid #ccc;
+        }
+        .content-section > select{
+            width: 95%;
+            margin: 15px;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 7px;
+            border: 1px solid #ccc;
+        }
+        .content-section center > button{
+            width: 200px;
+            padding: 7px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #00224d;
+            color: #fff;
+        }
+        
+        @media (max-width: 1240px) {
+            .balance-item {
+                width: calc(100% - 50px); /* Ensures it fits within the container's padding/margin */
+            }
+        }
+        @media screen and (max-width: 817px) {
+            .header{
+                display: none;
+                margin-top: 30px;
+            }
+            .header > li{
+                display: block;
+                text-align: left;
+                margin: 0;
+            }
+            .dropdown-content{
+                margin-top: 5px;
+                width: 100%;
+            }
+            .show{
+                display: block;
+                float: right;
+                margin-right: 10px;
+                cursor: pointer;
+                
+            }
+            .hide{
+                float: right;
+                margin-right: 10px;
+                cursor: pointer;
+                margin-top: 40px;
+            }
+            .header > img{
+                display: none;
+            }
+            .header > li:hover{
+                text-align: left;
+            }
+            .dropdown-content li:hover {
+            background-color: #00224d;
+            color: #fff;
+            text-align: left;
+            transition: 0.7s;
+        }
+        }
+        @media screen and (max-width: 868px) {
+            .tab-content{
+                display: block;
+                text-align: center;
+                align-items: center;
+            }
+            .dashboard, .tab{
+                width: 91%;
+            }
+        }
+        @media screen and (max-width: 1119px){
+            .balances-content{
+                display: block;
+                text-align: center;
+                align-items: center;
+            }
+            .balance-container{
+                width: 90%;
+                margin: 10px;
+            }
+            .show{
+                margin-top: 70px;
+            }
+            .header{
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+            .home{
+                margin-top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="last-login">
+        <i class="fa fa-user" aria-hidden="true"></i> User: &nbsp; <span id="userr"></span>&nbsp; || &nbsp; Role: <span>Admin</span> &nbsp; || &nbsp; <i class="fa fa-clock-o" aria-hidden="true"></i> Last Login: <span id="dateTime"></span>
+    </div>
+    <div class="show" id="show"><i class="fa fa-bars" aria-hidden="true"></i></div>
+    <div class="hide" id="hide"><i class="fa fa-ban" aria-hidden="true"></i></div>
+    <div class="header" id="header">
+        <img src="logo.jfif" alt="logo">
+        <li onclick="window.location.href='GCE Admin Dashboard.html'" style="background-color: #00224d;color: #fff;"><i class="fa fa-home" aria-hidden="true"></i> &nbsp;Home</li>
+        <!-- <li><a href="Invoice.html"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> &nbsp;Sales Invoice</a></li>
+        <li><a href="Company Deleivery.html"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> &nbsp;Company Delivery</a></li> -->
+        <!-- <li class="dropdown">
+            <a href="#">Inventory Management &nbsp;<i class="fa fa-angle-down" aria-hidden="true" style="float: right;"></i></a>
+            <ul class="dropdown-content">
+                <li><a href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> &nbsp;Supplier Waybill</a></li>
+                <li><a href="#"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> &nbsp;Product Adjustment</a></li>
+            </ul>
+        </li> -->
+        <li class="dropdown">
+            <a href="#">Account Management &nbsp;<i class="fa fa-angle-down" aria-hidden="true" style="float: right;"></i></a>
+            <ul class="dropdown-content">
+                <li class="showPopupBtn" data-popup="BankAccount"><i class="fa fa-university" aria-hidden="true"></i> &nbsp;Bank Account</li>
+                <!-- <li class="showPopupBtn" data-popup="adjustmentForm"><i class="fa fa-edit" aria-hidden="true"></i> &nbsp;Credit and Debit Note</li>
+                <li class="showPopupBtn" data-popup="customerpaymentForm"><i class="fa fa-money" aria-hidden="true"></i> &nbsp;Customer Payment</li>
+                <li><a href="Profit.html"><i class="fa fa-analytics" aria-hidden="true"></i> &nbsp;Profit Formula</a></li> -->
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#">Registration &nbsp;<i class="fa fa-angle-down" aria-hidden="true" style="float: right;"></i></a>
+            <ul class="dropdown-content">
+                <!-- <li><a href="Product.html"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp; Product Setup</a></li>
+                <br> -->
+                <li class="showPopupBtn" data-popup="customerForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Customer Setup</li>
+                <li class="showPopupBtn" data-popup="bankForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Bank Setup</li>
+                <!-- <li class="showPopupBtn" data-popup="SupplierForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Supplier Setup</li>
+                <li class="showPopupBtn" data-popup="InhouseSupplierForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Inhouse Supplier</li>
+                <li class="showPopupBtn" data-popup="customerForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Profit Setup</li>
+                <li class="showPopupBtn" data-popup="customerForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Expenses Setup</li>
+                <li class="showPopupBtn" data-popup="CompanyForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Company Setup</li>
+                <li class="showPopupBtn" data-popup="InvestorForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Investor Setup</li>
+                <li class="showPopupBtn" data-popup="ManagerForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Manager Setup</li>
+                <li class="showPopupBtn" data-popup="EmployeeForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; Employee Setup</li>
+                <li class="showPopupBtn" data-popup="UserForm"><i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp; User Setup</li> -->
+            </ul>
+        </li>
+        <!-- <li><a href="Report.html"><i class="fa fa-history" aria-hidden="true"></i> &nbsp;Report</a></li> -->
+        <li onclick="window.location.href='M A Login.html'"><i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Logout</li>
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+    <!-- Buttons to trigger popups -->
+
+    <!-- Popup 1 -->
+    <div id="customerForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fa fa-plus-circle" aria-hidden="true"></i> Customer Registration</h2>
+            <hr>
+            <form id="customer-form">
+                <label for="customer-name">Name:</label>
+                <input type="text" id="customer-name" required placeholder="Customer Name">
+                
+                <label for="customer-address">Address:</label>
+                <input type="text" id="customer-address" required placeholder="Customer Address">
+                
+                <label for="customer-phone">Phone Number:</label>
+                <input type="tel" id="customer-phone" required placeholder="Customer Phone">
+                
+                <label for="customer-email">Email:</label>
+                <input type="email" id="customer-email" required placeholder="Customer Email">
+                <center>
+                <button type="submit">Register Customer</button>
+                </center>
+            </form>
+        </div>
+    </div>
+
+    <div id="bankForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fa fa-plus-circle" aria-hidden="true"></i> Registration</h2>
+            <hr>
+            <form id="bank-form">
+                <label for="bank-name">Bank Name:</label>
+                <input type="text" id="bank-name" required placeholder="Bank Name">
+                
+                <label for="account-name">Account Name:</label>
+                <input type="text" id="account-name" required placeholder="Account Name">
+                
+                <label for="account-number">Account Number:</label>
+                <input type="text" id="account-number" required placeholder="Account Number">
+                <center>
+                <button type="submit">Register Bank</button>
+                </center>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Popup 2 -->
+    <!-- <div id="SupplierForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Popup 2</h2>
+            <form>
+                <label for="name2">Name:</label>
+                <input type="text" id="name2" name="name2" required>
+                <label for="email2">Email:</label>
+                <input type="email" id="email2" name="email2" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- Popup 3 -->
+    <!-- <div id="InhouseSupplierForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Popup 3</h2>
+            <form>
+                <label for="name3">Name:</label>
+                <input type="text" id="name3" name="name3" required>
+                <label for="email3">Email:</label>
+                <input type="email" id="email3" name="email3" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- CompanyForm -->
+    <!-- <div id="CompanyForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Popup 4</h2>
+            <form>
+                <label for="name4">Name:</label>
+                <input type="text" id="name4" name="name4" required>
+                <label for="email4">Email:</label>
+                <input type="email" id="email4" name="email4" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- InvestorForm -->
+    <!-- <div id="InvestorForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Popup 5</h2>
+            <form>
+                <label for="name5">Name:</label>
+                <input type="text" id="name5" name="name5" required>
+                <label for="email5">Email:</label>
+                <input type="email" id="email5" name="email5" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+
+     <!-- ManagerForm -->
+     <!-- <div id="ManagerForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>ManagerForm</h2>
+            <form>
+                <label for="name5">Names:</label>
+                <input type="text" id="name5" name="name5" required>
+                <label for="email5">Email:</label>
+                <input type="email" id="email5" name="email5" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- EmployeeForm -->
+    <!-- <div id="EmployeeForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>EmployeeForm</h2>
+            <form>
+                <label for="name5">Names:</label>
+                <input type="text" id="name5" name="name5" required>
+                <label for="email5">Email:</label>
+                <input type="email" id="email5" name="email5" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- UserForm -->
+    <!-- <div id="UserForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>UserForm</h2>
+            <form>
+                <label for="name5">Names:</label>
+                <input type="text" id="name5" name="name5" required>
+                <label for="email5">Email:</label>
+                <input type="email" id="email5" name="email5" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- BankAccount -->
+    <div id="BankAccount" class="popup">
+        <div class="popup-content" style="height: 75vh;margin-top: 50px;">
+            <span class="close-btn">&times;</span>
+            <h2><i class="fa fa-university" aria-hidden="true"></i> Bank Account</h2>
+            <hr>
+            <form>
+                <div class="form">
+                <input type="date" id="currentDate" readonly>
+                </div>
+                <div class="form" style="height: 50vh;">
+                    <select name="action" id="action" onchange="showContent()">
+                        <option value="" selected>--Select Action--</option>
+                        <option value="Payment to Client">Customer Payment</option>
+                        <!-- <option value="Cash to Bank Deposit">Bank to Bank Deposit</option>
+                        <option value="Payment to Investor">Payment to Investor</option>
+                        <option value="Payment to Manager">Payment to Manager</option>
+                        <option value="Payment to Profit">Payment to Profit Account</option>
+                        <option value="Payment to Client">Customer</option> -->
+                        <!-- <option value="Payment to Supplier2">Payment to House Supplier</option>
+                        <option value="Payment to Supplier">Payment to Supplier</option>
+                        <option value="Payment to Transporter">Payment to Transporter</option>
+                        <option value="Customer to Dependent">Customer to Dependent</option>
+                        <option value="Dependent to Customer">Dependent to Customer</option>
+                        <option value="Payment to Company">Payment to Company</option>
+                        <option value="Dependent to Dependent">Dependent to Dependant</option>
+                        <option value="Supplier to Supplier">Supplier to Supplier</option>
+                        <option value="Supplier to Customer">Supplier to Customer</option>
+                        <option value="Customer to Supplier">Customer to Supplier</option>
+                        <option value="Customer to Manager">Customer to Manager</option>
+                        <option value="Manager to Customer">Manager to Customer</option>
+                        <option value="Payment from Profit">Payment from Profit Account</option>
+                        <option value="Payment from Client">Payment from Customer</option>
+                        <option value="Payment from Company">Payment from Company</option>
+                        <option value="Payment from Supplier">Payment from Supplier</option>
+                        <option value="Payment from Supplier2">Payment from House Supplier</option>
+                        <option value="Payment from Manager">Payment from Manager</option>
+                        <option value="Payment from Investor">Payment from Investor</option>
+                        <option value="Client to Client">Client to Client Transfer</option>
+                        <option value="Cash to Non Client">Cash to Non Client</option>
+                        <option value="Branch to Bank">Branch to Bank</option>
+                        <option value="Bank Charges">Bank Charges Committment</option> -->
+                    </select>
+                    <br>
+                    <!-- Content Sections -->
+                    <!-- <div id="Cash to Bank Deposit" class="content-section">
+                        <select name="" id="">
+                            <option value="">Mahadi</option>
+                        </select>
+                    </div>
+                    <div id="Payment to Investor" class="content-section">
+                        <h2>Payment to Investor</h2>
+                        <p>Content for Payment to Investor</p>
+                    </div>
+                    <div id="Payment to Manager" class="content-section">
+                        <h2>Payment to Manager</h2>
+                        <p>Content for Payment to Manager</p>
+                    </div>
+                    <div id="Payment to Profit" class="content-section">
+                        <h2>Payment to Profit</h2>
+                        <p>Content for Payment to Profit Account</p>
+                    </div> -->
+                    <div id="Payment to Client" class="content-section">
+                        <form id="transaction-form">
+                            <label for="transaction-type">Transaction Type:</label>
+                            <select id="transaction-type">
+                                <option value="add">Payment From Client</option>
+                                <option value="subtract">Payment to Client</option>
+                            </select>
+                            <label for="select-customer">Select Customer:</label>
+                            <select id="select-customer">
+                            </select>
+                            <label for="select-bank">Select Bank:</label>
+                            <select id="select-bank"></select>
+                            <label for="amount">Amount:</label>
+                            <input type="number" id="amount" required placeholder="Amount">
+                            <center>
+                            <button type="button" onclick="submitBankTransaction()">Submit Transaction</button>
+                            </center>
+                        </form>
+                        
+                    </div>
+                    <!-- <div id="Payment to Supplier2" class="content-section">
+                        <h2>Payment to Supplier2</h2>
+                        <p>Content for Payment to House Supplier</p>
+                    </div>
+                    <div id="Payment to Supplier" class="content-section">
+                        <h2>Payment to Supplier</h2>
+                        <p>Content for Payment to Supplier</p>
+                    </div>
+                    <div id="Payment to Transporter" class="content-section">
+                        <h2>Payment to Transporter</h2>
+                        <p>Content for Payment to Transporter</p>
+                    </div>
+                    <div id="Customer to Dependent" class="content-section">
+                        <h2>Customer to Dependent</h2>
+                        <p>Content for Customer to Dependent</p>
+                    </div>
+                    <div id="Dependent to Customer" class="content-section">
+                        <h2>Dependent to Customer</h2>
+                        <p>Content for Dependent to Customer</p>
+                    </div>
+                    <div id="Payment to Company" class="content-section">
+                        <h2>Payment to Company</h2>
+                        <p>Content for Payment to Company</p>
+                    </div>
+                    <div id="Dependent to Dependent" class="content-section">
+                        <h2>Dependent to Dependent</h2>
+                        <p>Content for Dependent to Dependant</p>
+                    </div>
+                    <div id="Supplier to Supplier" class="content-section">
+                        <h2>Supplier to Supplier</h2>
+                        <p>Content for Supplier to Supplier</p>
+                    </div>
+                    <div id="Supplier to Customer" class="content-section">
+                        <h2>Supplier to Customer</h2>
+                        <p>Content for Supplier to Customer</p>
+                    </div>
+                    <div id="Customer to Supplier" class="content-section">
+                        <h2>Customer to Supplier</h2>
+                        <p>Content for Customer to Supplier</p>
+                    </div>
+                    <div id="Customer to Manager" class="content-section">
+                        <h2>Customer to Manager</h2>
+                        <p>Content for Customer to Manager</p>
+                    </div>
+                    <div id="Manager to Customer" class="content-section">
+                        <h2>Manager to Customer</h2>
+                        <p>Content for Manager to Customer</p>
+                    </div>
+                    <div id="Payment from Profit" class="content-section">
+                        <h2>Payment from Profit</h2>
+                        <p>Content for Payment from Profit Account</p>
+                    </div>
+                    <div id="Payment from Client" class="content-section">
+                        <h2>Payment from Client</h2>
+                        <p>Content for Payment from Customer</p>
+                    </div>
+                    <div id="Payment from Company" class="content-section">
+                        <h2>Payment from Company</h2>
+                        <p>Content for Payment from Company</p>
+                    </div>
+                    <div id="Payment from Supplier" class="content-section">
+                        <h2>Payment from Supplier</h2>
+                        <p>Content for Payment from Supplier</p>
+                    </div>
+                    <div id="Payment from Supplier2" class="content-section">
+                        <h2>Payment from Supplier2</h2>
+                        <p>Content for Payment from House Supplier</p>
+                    </div>
+                    <div id="Payment from Manager" class="content-section">
+                        <h2>Payment from Manager</h2>
+                        <p>Content for Payment from Manager</p>
+                    </div>
+                    <div id="Payment from Investor" class="content-section">
+                        <h2>Payment from Investor</h2>
+                        <p>Content for Payment from Investor</p>
+                    </div>
+                    <div id="Client to Client" class="content-section">
+                        <h2>Client to Client</h2>
+                        <p>Content for Client to Client Transfer</p>
+                    </div>
+                    <div id="Cash to Non Client" class="content-section">
+                        <h2>Cash to Non Client</h2>
+                        <p>Content for Cash to Non Client</p>
+                    </div>
+                    <div id="Branch to Bank" class="content-section">
+                        <h2>Branch to Bank</h2>
+                        <p>Content for Branch to Bank</p>
+                    </div>
+                    <div id="Bank Charges" class="content-section">
+                        <h2>Bank Charges</h2>
+                        <p>Content for Bank Charges Committment</p>
+                    </div> -->
+                </div>
+                <!-- <button type="submit" style="bottom: 0;position: fixed;float: right;margin: 10px;padding: 10px;background-color: #00224d;color: #fff;font-family: Arial, Helvetica, sans-serif;font-size: 20px;border: none;border-radius: 5px;cursor: pointer;">Submit</button> -->
+            </form>
+        </div>
+    </div>
+
+    <!-- adjustmentForm -->
+    <!-- <div id="adjustmentForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>adjustmentForm</h2>
+            <form>
+                <label for="name5">Names:</label>
+                <input type="text" id="name5" name="name5" required>
+                <label for="email5">Email:</label>
+                <input type="email" id="email5" name="email5" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+    <!-- customerpaymentForm -->
+    <!-- <div id="customerpaymentForm" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>customerpaymentForm</h2>
+            <form>
+                <label for="name5">Names:</label>
+                <input type="text" id="name5" name="name5" required>
+                <label for="email5">Email:</label>
+                <input type="email" id="email5" name="email5" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div> -->
+    <div class="home">
+        <h1><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h1>
+        <hr style="border: 1px solid green;margin: 10px;">
+        <div class="tab-content">
+            <div class="dashboard" id="tab1">
+                <i class="fa fa-database" aria-hidden="true" style="font-size: 30px;"></i>
+                <br><br>
+                Dashboard
+            </div>
+            <div class="tab" id="tab2">
+                <i class="fa fa-university" aria-hidden="true"></i>
+                <br><br>
+                Account
+            </div>
+            <div class="tab" id="tab3">
+                <i class="fa fa-truck" aria-hidden="true"></i>
+                <br><br>
+                Delivery
+            </div>
+            <div class="tab" id="tab4">
+                <i class="fa fa-plane" aria-hidden="true"></i>
+                <br><br>
+                Supply
+            </div>
+            <div class="tab" id="tab5">
+                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                <br><br>
+                Inventory
+            </div>
+            <div class="tab" id="tab6" style="margin-right: 20px;" onclick="window.location.href='GCE Admin Dashboard.html'">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                <br><br>
+                Refresh
+            </div>
+        </div>
+        <div class="dashboard-content" id="tab1c">
+            <div class="balances-container">
+                <div class="balance-item" style="margin-top: 40px;">
+                    <h2><i class="fa fa-users" aria-hidden="true"></i> Customer Balances <span id="dateTime"></span></h2>
+                    <input type="search" name="search" id="search" placeholder="Search Customer...">
+                    <hr style="border: 1px solid #00224d;">
+                    <div id="customer-balances">
+                        <!-- Example customer entries -->
+                    </div>
+                </div>
+        
+                <div class="balance-item" style="margin-top: 40px;">
+                    <h2><i class="fa fa-university" aria-hidden="true"></i> Bank Account Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Bank Account...">
+                    <hr style="border: 1px solid #00224d;">
+                    <div id="bank-balances"></div>
+                </div>
+
+                <!-- <div class="balance-item" style="margin-top: 40px;">
+                    <h2><i class="fa fa-money" aria-hidden="true"></i> Expenses Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Expenses...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Expenses Available!</p>
+                </div>
+
+                <div class="balance-item" style="margin-top: 40px;">
+                    <h2><i class="fa fa-analytics" aria-hidden="true"></i> Profit Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Profit...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Profits Available!</p>
+                </div>
+
+                <div class="balance-item">
+                    <h2><i class="fa fa-users" aria-hidden="true"></i> Dependent Supplier Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Dependent Supplier...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Dependent Supplier Available!</p>
+                </div>
+                <div class="balance-item">
+                    <h2><i class="fa fa-users" aria-hidden="true"></i> Independent Supplier Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Independent Supplier...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Independent Supplier Available!</p>
+                </div>
+                <div class="balance-item">
+                    <h2><i class="fa fa-building" aria-hidden="true"></i> Company Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Company...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Company Available!</p>
+                </div>
+                <div class="balance-item">
+                    <h2><i class="fa fa-exchange" aria-hidden="true"></i> Fertilizer Supplier Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Supplier...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Fertilizer Supplier Available!</p>
+                </div>
+                <div class="balance-item">
+                    <h2><i class="fa fa-users" aria-hidden="true"></i> Investor Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Investor...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Investor Available!</p>
+                </div>
+                <div class="balance-item">
+                    <h2><i class="fa fa-building" aria-hidden="true"></i> Manager Balances</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Manager...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Manager Available!</p>
+                </div>
+                <div class="balance-item">
+                    <h2><i class="fa fa-bar-chart" aria-hidden="true"></i> Inventory Budget</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Inventory Budget...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Inventory Budget Available!</p>
+                </div> -->
+                <!-- <div class="balance-item">
+                    <h2><i class="fa fa-line-chart" aria-hidden="true"></i> Financial Budget</h2>
+                    <input type="search" name="search" id="search" placeholder="Search Financial Budget...">
+                    <hr style="border: 1px solid #00224d;">
+                    <p>No More Financial Budget Available!</p>
+                </div> -->
+            </div>
+            </div>
+        </div>
+        <!-- <div class="contents" id="tab2c">
+            Account
+            <div class="navv"></div>
+        </div>
+        <div class="contents" id="tab3c">
+            Delivery
+        </div>
+        <div class="contents" id="tab4c">
+            Supply
+        </div>
+        <div class="contents" id="tab5c">
+            Inventory
+        </div> -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/367278d2a4.js" crossorigin="anonymous"></script>
+    <script>
+        const storeduser = localStorage.getItem("username");
+        document.getElementById("userr").innerText = `${storeduser}`;
+
+
+        const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(today.getDate()).padStart(2, '0');
+
+    // Format the date as YYYY-MM-DD
+    const currentDate = `${year}-${month}-${day}`;
+
+    // Set the date input value to the current date
+    document.getElementById('currentDate').value = currentDate;
+
+
+        function updateDateTime() {
+            const dateTimeSpan = document.getElementById('dateTime');
+            const now = new Date();
+            const formattedDateTime = now.toLocaleString();
+            dateTimeSpan.textContent = formattedDateTime;
+        }
+
+        // Update date and time immediately on load
+        updateDateTime();
+
+        document.querySelectorAll('.showPopupBtn').forEach(button => {
+            button.addEventListener('click', function() {
+                const popupId = this.getAttribute('data-popup');
+                document.getElementById(popupId).classList.add('show');
+            });
+        });
+
+        document.querySelectorAll('.close-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.popup').classList.remove('show');
+            });
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('popup')) {
+                event.target.classList.remove('show');
+            }
+        });
+
+        var show = document.getElementById("show");
+        var hide = document.getElementById("hide");
+        var header = document.getElementById("header");
+
+        show.onclick = function(){
+            header.style.display = "block";
+            hide.style.display = "block";
+            show.style.display = "none";
+        }
+        hide.onclick = function(){
+            header.style.display = "none";
+            hide.style.display = "none";
+            show.style.display = "block";
+        }
+
+  
+
+        var tab1 = document.getElementById("tab1");
+        var tab2 = document.getElementById("tab2");
+        var tab3 = document.getElementById("tab3");
+        var tab4 = document.getElementById("tab4");
+        var tab5 = document.getElementById("tab5");
+        
+        var tab1c = document.getElementById("tab1c");
+        // var tab2c = document.getElementById("tab2c");
+        // var tab3c = document.getElementById("tab3c");
+        // var tab4c = document.getElementById("tab4c");
+        // var tab5c = document.getElementById("tab5c");
+
+        tab1.onclick = function(){
+            tab1c.style.display = "block";
+            // tab2c.style.display = "none";
+            // tab3c.style.display = "none";
+            // tab4c.style.display = "none";
+            // tab5c.style.display = "none";
+        }
+        // tab2.onclick = function(){
+        //     tab1c.style.display = "none";
+        //     tab2c.style.display = "block";
+        //     tab3c.style.display = "none";
+        //     tab4c.style.display = "none";
+        //     tab5c.style.display = "none";
+        // }
+        // tab3.onclick = function(){
+        //     tab1c.style.display = "none";
+        //     tab2c.style.display = "none";
+        //     tab3c.style.display = "block";
+        //     tab4c.style.display = "none";
+        //     tab5c.style.display = "none";
+        // }
+        // tab4.onclick = function(){
+        //     tab1c.style.display = "none";
+        //     tab2c.style.display = "none";
+        //     tab3c.style.display = "none";
+        //     tab4c.style.display = "block";
+        //     tab5c.style.display = "none";
+        // }
+        // tab5.onclick = function(){
+        //     tab1c.style.display = "none";
+        //     tab2c.style.display = "none";
+        //     tab3c.style.display = "none";
+        //     tab4c.style.display = "none";
+        //     tab5c.style.display = "block";
+        // }
+
+        function showContent() {
+            var action = document.getElementById('action').value;
+            var sections = document.getElementsByClassName('content-section');
+            
+            // Hide all content sections
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].style.display = 'none';
+            }
+            
+            // Show the selected content section
+            if (action) {
+                document.getElementById(action).style.display = 'block';
+            }
+        }
+        
+
+        document.addEventListener("DOMContentLoaded", function() {
+    const customerForm = document.getElementById("customer-form");
+    const bankForm = document.getElementById("bank-form");
+    const selectCustomer = document.getElementById("select-customer");
+    const selectBank = document.getElementById("select-bank");
+    const customerBalances = document.getElementById("customer-balances");
+    const bankBalances = document.getElementById("bank-balances");
+
+    let customers = JSON.parse(localStorage.getItem("customers")) || [];
+    let banks = JSON.parse(localStorage.getItem("banks")) || [];
+    let customerBalanceData = JSON.parse(localStorage.getItem("customerBalanceData")) || {};
+    let bankBalanceData = JSON.parse(localStorage.getItem("bankBalanceData")) || {};
+
+    // Initialize the dropdowns and balances when the page loads
+    updateCustomerSelect();
+    updateBankSelect();
+    updateCustomerBalances();
+    updateBankBalances();
+
+    // Register Customer
+    customerForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const customerName = document.getElementById("customer-name").value;
+        const customerAddress = document.getElementById("customer-address").value;
+        const customerPhone = document.getElementById("customer-phone").value;
+        const customerEmail = document.getElementById("customer-email").value;
+
+        const customer = { name: customerName, address: customerAddress, phone: customerPhone, email: customerEmail, balance: 0 };
+        customers.push(customer);
+        customerBalanceData[customerName] = 0;
+        saveToLocalStorage();
+
+        updateCustomerSelect();
+        updateCustomerBalances();
+
+        Swal.fire("Success", "Customer registered successfully!", "success");
+        customerForm.reset();
+    });
+
+    // Register Bank
+    bankForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const bankName = document.getElementById("bank-name").value;
+        const accountName = document.getElementById("account-name").value;
+        const accountNumber = document.getElementById("account-number").value;
+
+        const bank = { bankName: bankName, accountName: accountName, accountNumber: accountNumber, balance: 0 };
+        banks.push(bank);
+        bankBalanceData[bankName] = 0;
+        saveToLocalStorage();
+
+        updateBankSelect();
+        updateBankBalances();
+
+        Swal.fire("Success", "Bank registered successfully!", "success");
+        bankForm.reset();
+    });
+
+    // Custom function to handle bank transaction submission
+    window.submitBankTransaction = function() {
+        const selectedCustomer = selectCustomer.value;
+        const selectedBank = selectBank.value;
+        const transactionType = document.getElementById("transaction-type").value;
+        const amount = parseFloat(document.getElementById("amount").value);
+
+        if (isNaN(amount) || amount <= 0) {
+            Swal.fire("Error", "Please enter a valid amount.", "error");
+            return;
+        }
+
+        if (transactionType === "add") {
+            customerBalanceData[selectedCustomer] -= amount;
+            bankBalanceData[selectedBank] += amount;
+        } else if (transactionType === "subtract") {
+            customerBalanceData[selectedCustomer] += amount;
+            bankBalanceData[selectedBank] -= amount;
+        } else {
+            Swal.fire("Error", "Invalid transaction type.", "error");
+            return;
+        }
+
+        saveToLocalStorage();
+        updateCustomerBalances();
+        updateBankBalances();
+
+        Swal.fire("Success", "Transaction completed successfully!", "success");
+        document.getElementById("transaction-form").reset();
+    };
+
+    // Save data to localStorage
+    function saveToLocalStorage() {
+        localStorage.setItem("customers", JSON.stringify(customers));
+        localStorage.setItem("banks", JSON.stringify(banks));
+        localStorage.setItem("customerBalanceData", JSON.stringify(customerBalanceData));
+        localStorage.setItem("bankBalanceData", JSON.stringify(bankBalanceData));
+    }
+
+    // Update Customer Select Options
+    function updateCustomerSelect() {
+        selectCustomer.innerHTML = "";
+        customers.forEach(customer => {
+            const option = document.createElement("option");
+            option.value = customer.name;
+            option.textContent = customer.name;
+            selectCustomer.appendChild(option);
+        });
+    }
+
+    // Update Bank Select Options
+    function updateBankSelect() {
+        selectBank.innerHTML = "";
+        banks.forEach(bank => {
+            const option = document.createElement("option");
+            option.value = bank.bankName;
+            option.textContent = bank.bankName;
+            selectBank.appendChild(option);
+        });
+    }
+
+    // Display Customer Balances
+    function updateCustomerBalances() {
+        customerBalances.innerHTML = "";
+        for (const [customer, balance] of Object.entries(customerBalanceData)) {
+            const div = document.createElement("div");
+
+            // Format the balance with commas and determine color
+            const formattedBalance = new Intl.NumberFormat().format(balance);
+            const balanceSpan = document.createElement("span");
+            balanceSpan.textContent = `₦${formattedBalance}`;
+            balanceSpan.style.color = balance < 0 ? "red" : "blue";
+
+            // Append the customer name and formatted balance
+            div.textContent = `${customer}: `;
+            div.appendChild(balanceSpan);
+
+            customerBalances.appendChild(div);
+        }
+    }
+
+    // Display Bank Balances
+    function updateBankBalances() {
+        bankBalances.innerHTML = "";
+        for (const [bank, balance] of Object.entries(bankBalanceData)) {
+            const div = document.createElement("div");
+
+            // Format the balance with commas and determine color
+            const formattedBalance = new Intl.NumberFormat().format(balance);
+            const balanceSpan = document.createElement("span");
+            balanceSpan.textContent = `₦${formattedBalance}`;
+            balanceSpan.style.color = balance < 0 ? "red" : "blue";
+
+            // Append the bank name and formatted balance
+            div.textContent = `${bank}: `;
+            div.appendChild(balanceSpan);
+
+            bankBalances.appendChild(div);
+        }
+    }
+});
+
+
+    
+    </script>
+</body>
+</html>

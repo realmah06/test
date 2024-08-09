@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M A Mujaheed Global Enterprises</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="logo.jfif">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            justify-content: center;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+        }
+        .login-container{
+            width: 550px;
+            border: 1px solid #e0dddd;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container center > img{
+            height: 100px;
+        }
+        .login-container center > h1{
+            font-size: 40px;
+            color: #c54040;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        .login-container > label{
+            display: block;
+            font-size: 17px;
+            font-weight: bold;
+            color: #555555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .login-container > input[type="text"],
+        .login-container > input[type="password"]{
+            width: 95%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+        #forgot{
+            float: right;
+        }
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+        #checkbox, #forgot{
+            margin: 12px 0;
+        }
+        .log-btn{
+            width: 95%;
+            margin-left: 2.5%;
+            font-size: 17px;
+            background-color: #292929;
+            padding: 10px;
+            color: #ccc;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .log-btn:hover{
+            background-color: #0e0d0d;
+        }
+        .toggle-button {
+            padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <center>
+            <img src="logo.jfif" alt="logo">
+            <h1>M A Mujaheed <br>Global Enterprises</h1>
+        </center>
+        <hr style="border: 1.5px solid green;">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" placeholder="Username">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password">
+        <button id="togglePassword" class="toggle-button">
+            <i class="fa fa-eye" aria-hidden="true" style="color: #000;"></i>
+        </button>
+        <br>
+        <input type="checkbox" id="checkbox"> Remember me 
+        <a href="#" id="forgot">Forgot Your Password?</a>
+        <br>
+        <button onclick="Login()" class="log-btn">Login</button>
+        <hr style="border: 1px solid green;">
+        <br>
+    </div>
+    <script src="https://kit.fontawesome.com/367278d2a4.js" crossorigin="anonymous"></script>
+    <script>
+        function Login(){
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            const storedusername = localStorage.setItem("username", username);
+
+            Swal.fire({
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+
+            setTimeout(() => {
+                if(username === "Mahadi" && password === "4787@"){
+                    Swal.fire({
+                        icon: "success",
+                        title: "Congratulations 🤗!",
+                        text: `Dear ${username}, You have successfully logged in to the Admin Dashboard!`,
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "M A Admin Dashboard.html";
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Wrong Input 🤪!",
+                        text: "Incorrect username or password.",
+                        confirmButtonText: "Try Again",
+                    });
+                }
+            }, 2000); // Simulate a delay for loading
+        }
+
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+        const icon = togglePassword.querySelector('i');
+
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            
+            // Toggle the icon
+            if (type === 'password') {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+
+
+    </script>
+</body>
+</html>
